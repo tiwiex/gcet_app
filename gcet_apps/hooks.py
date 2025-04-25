@@ -5,6 +5,33 @@ app_description = "GCET Custom Apps"
 app_email = "tiwiex@yahoo.com"
 app_license = "mit"
 
+# # Report overrides - Fixed format
+override_doctype_class = {
+    "Report": "gcet_apps.gcet_apps.report.modified_reports.report_controller.CustomReport"
+}
+
+# Include js files in header of desk.html
+app_include_js = [
+    "/assets/gcet_apps/js/financial_statements_with_fc.js"
+]
+
+# Report configurations
+reports = [
+    {
+        "doctype": "Report",
+        "name": "Financial Statements with FC",
+        "report_name": "Financial Statements with FC",
+        "module": "Accounts",
+        "is_standard": "Yes",
+        "ref_doctype": "GL Entry"
+    }
+]
+
+# Force module refresh on session creation
+on_session_creation = [
+    "frappe.desk.moduleview.clear_cache"
+]
+
 # Apps
 # ------------------
 
@@ -26,7 +53,22 @@ app_license = "mit"
 
 # include js, css files in header of desk.html
 # app_include_css = "/assets/gcet_apps/css/gcet_apps.css"
-# app_include_js = "/assets/gcet_apps/js/gcet_apps.js"
+# app_include_js = [
+#     "js/financial_statements_with_fc.js"
+#     #"/assets/gcet_apps/js/idelta_invoice_margin_analysis_report.js"
+# ]
+
+# Report initialization
+report_config = [
+    {
+        "doctype": "Report",
+        "name": "Financial Statements with FC",
+        "report_name": "Financial Statements with FC",
+        "module": "Accounts",
+        "is_standard": "No",
+        "ref_doctype": "GL Entry"
+    }
+]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/gcet_apps/css/gcet_apps.css"
