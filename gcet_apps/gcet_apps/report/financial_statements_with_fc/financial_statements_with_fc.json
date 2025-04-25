@@ -1,0 +1,24 @@
+{
+    "name": "Financial Statements with FC",
+    "owner": "Administrator",
+    "creation": "2024-01-15 10:00:00.000000",
+    "modified": "2024-01-15 10:00:00.000000",
+    "modified_by": "Administrator",
+    "doctype": "Report",
+    "ref_doctype": "GL Entry",
+    "report_name": "Financial Statements with FC",
+    "report_type": "Script Report",
+    "is_standard": "Yes",
+    "module": "GCET Apps",
+    "roles": [
+        {
+            "role": "Accounts Manager"
+        },
+        {
+            "role": "Accounts User"
+        },
+        {
+            "role": "Auditor"
+        }
+    ]
+}
