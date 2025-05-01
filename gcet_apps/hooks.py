@@ -7,30 +7,31 @@ app_license = "mit"
 
 # # Report overrides - Fixed format
 override_doctype_class = {
-    "Report": "gcet_apps.gcet_apps.report.modified_reports.report_controller.CustomReport"
+    "Report": "gcet_apps.report.modified_reports.report_controller.CustomReport"
 }
 
 # Include js files in header of desk.html
 app_include_js = [
-    "/assets/gcet_apps/js/financial_statements_with_fc.js"
+    "/assets/frappe/node_modules/jquery/dist/jquery.min.js",
+    "/assets/gcet_apps/js/balance_sheet.js"
 ]
 
 # Report configurations
-reports = [
-    {
-        "doctype": "Report",
-        "name": "Financial Statements with FC",
-        "report_name": "Financial Statements with FC",
-        "module": "Accounts",
-        "is_standard": "Yes",
-        "ref_doctype": "GL Entry"
-    }
-]
+# reports = [
+#     {
+#         "doctype": "Report",
+#         "name": "Financial Statements with FC",
+#         "report_name": "Financial Statements with FC",
+#         "module": "Accounts",
+#         "is_standard": "Yes",
+#         "ref_doctype": "GL Entry"
+#     }
+# ]
 
 # Force module refresh on session creation
-on_session_creation = [
-    "frappe.desk.moduleview.clear_cache"
-]
+# on_session_creation = [
+#     "frappe.desk.moduleview.clear_cache"
+# ]
 
 # Apps
 # ------------------
@@ -59,16 +60,16 @@ on_session_creation = [
 # ]
 
 # Report initialization
-report_config = [
-    {
-        "doctype": "Report",
-        "name": "Financial Statements with FC",
-        "report_name": "Financial Statements with FC",
-        "module": "Accounts",
-        "is_standard": "No",
-        "ref_doctype": "GL Entry"
-    }
-]
+# report_config = [
+#     {
+#         "doctype": "Report",
+#         "name": "Financial Statements with FC",
+#         "report_name": "Financial Statements with FC",
+#         "module": "Accounts",
+#         "is_standard": "No",
+#         "ref_doctype": "GL Entry"
+#     }
+# ]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/gcet_apps/css/gcet_apps.css"
@@ -283,4 +284,3 @@ report_config = [
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
-
