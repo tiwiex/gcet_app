@@ -12,7 +12,7 @@ override_doctype_class = {
 
 # Include js files in header of desk.html
 app_include_js = [
-    "/assets/frappe/node_modules/jquery/dist/jquery.min.js",
+    #"/assets/frappe/node_modules/jquery/dist/jquery.min.js",
     "/assets/gcet_apps/js/balance_sheet.js"
 ]
 

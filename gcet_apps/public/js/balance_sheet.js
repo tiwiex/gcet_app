@@ -1,20 +1,19 @@
-// Wait for jQuery to be loaded
-$(document).ready(function() {
-    console.log("Balance Sheet JS loaded Fast");
+// Wait for document ready
+frappe.ready(function() {
+    console.log("Balance Sheet JS loaded");
     
     // Add event listener to check when the report is loaded
-    $(document).on("report-refresh", function() {
+    frappe.realtime.on("report-refresh", function() {
         console.log("Report refreshed");
         // Check if the USD column exists
-        const columns = $('.grid-row').find('.grid-cell');
+        const columns = document.querySelectorAll('.grid-row .grid-cell');
         let hasUsdColumn = false;
         
-        columns.each(function() {
-            const cell = $(this);
-            const fieldname = cell.data('fieldname');
+        columns.forEach(function(cell) {
+            const fieldname = cell.getAttribute('data-fieldname');
             if (fieldname === 'amount_usd') {
                 hasUsdColumn = true;
-                cell.show();
+                cell.style.display = 'table-cell';
             }
         });
         
@@ -22,21 +21,20 @@ $(document).ready(function() {
     });
     
     // Add event listener for report generation
-    $(document).on("report-generate", function() {
+    frappe.realtime.on("report-generate", function() {
         console.log("Report generation started");
     });
 
     // Add event listener for report data load
-    $(document).on("report-data-loaded", function() {
+    frappe.realtime.on("report-data-loaded", function() {
         console.log("Report data loaded");
-        const columns = $('.grid-row').find('.grid-cell');
+        const columns = document.querySelectorAll('.grid-row .grid-cell');
         let hasUsdValues = false;
         
-        columns.each(function() {
-            const cell = $(this);
-            const fieldname = cell.data('fieldname');
+        columns.forEach(function(cell) {
+            const fieldname = cell.getAttribute('data-fieldname');
             if (fieldname === 'amount_usd') {
-                const value = cell.text().trim();
+                const value = cell.textContent.trim();
                 if (value && value !== '0.00') {
                     hasUsdValues = true;
                 }
