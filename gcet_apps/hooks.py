@@ -12,9 +12,13 @@ override_doctype_class = {
 
 # Include js files in header of desk.html
 app_include_js = [
-    #"/assets/frappe/node_modules/jquery/dist/jquery.min.js",
-    "/assets/gcet_apps/js/balance_sheet.js"
+    "/assets/gcet_apps/js/modified_balance_sheet.js"
 ]
+
+# Report script paths - this is what connects the report to its JS file
+report_script_paths = {
+    "Balance Sheet": "gcet_apps/public/js/modified_balance_sheet.js"
+}
 
 # Report configurations
 # reports = [
@@ -284,3 +288,35 @@ app_include_js = [
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs
 # }
+
+# DocTypes
+# --------
+# before_install = "your_app_name.install.before_install"
+# after_install = "your_app_name.install.after_install"
+
+# Desk Notifications
+# ------------------
+# See frappe.core.notifications.get_notification_config
+
+# Jinja
+# -----
+# add methods and filters to jinja environment
+
+# Fixtures
+# --------
+# fixtures = ["Custom Field"]
+
+# Add your custom JavaScript files
+doctype_js = {
+    # ... existing doctype_js entries ...
+}
+
+# Add your custom report JavaScript files
+doctype_list_js = {
+    # ... existing doctype_list_js entries ...
+}
+
+# Add your modified balance sheet report JavaScript
+report_script_paths = {
+    "Balance Sheet": "gcet_apps/public/js/modified_balance_sheet.js"
+}
