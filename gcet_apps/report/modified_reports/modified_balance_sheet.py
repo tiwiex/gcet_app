@@ -11,7 +11,7 @@ logger.setLevel(logging.DEBUG)
 
 def execute(filters=None):
     logger.info("Modified balance sheet execute called")
-    logger.debug(f"Filters: {filters}")
+    logger.debug(f"Original filters: {filters}")
     
     try:
         # Ensure filters is a dictionary
@@ -25,38 +25,50 @@ def execute(filters=None):
         if "periodicity" not in filters:
             filters["periodicity"] = "Yearly"
             
-        logger.info(f"Using filters: {filters}")
+        # Extract show_usd parameter
+        show_usd = filters.get("show_usd", 1)
+        
+        # Create a copy of filters without show_usd for original_execute
+        original_filters = filters.copy()
+        if "show_usd" in original_filters:
+            del original_filters["show_usd"]
+            
+        logger.info(f"Using filters for original execute: {original_filters}")
         
         # Get original data
-        columns, data, message, chart, report_summary = original_execute(filters)
+        columns, data, message, chart, report_summary = original_execute(original_filters)
         logger.info("Original data retrieved")
         
-        # Always add USD columns
-        exchange_rate = get_usd_exchange_rate()
-        logger.info(f"Using USD exchange rate: {exchange_rate}")
-        
-        # Add USD columns
-        new_columns = []
-        for col in columns:
-            new_columns.append(col)
-            if isinstance(col, dict) and col.get("fieldname") and col.get("fieldname") != "account":
-                usd_col = col.copy()
-                usd_col["fieldname"] = f"{col['fieldname']}_usd"
-                usd_col["label"] = f"{col['label']} (USD)"
-                usd_col["options"] = "Currency"
-                usd_col["currency"] = "USD"
-                new_columns.append(usd_col)
-        
-        columns = new_columns
-        
-        # Add USD values to data
-        for row in data:
-            if isinstance(row, dict):
-                for col in columns:
-                    if isinstance(col, dict) and col.get("fieldname") and "_usd" in col.get("fieldname"):
-                        original_fieldname = col.get("fieldname").replace("_usd", "")
-                        if row.get(original_fieldname) is not None:
-                            row[col.get("fieldname")] = flt(row.get(original_fieldname)) / exchange_rate
+        # Add USD columns if show_usd is enabled
+        if show_usd:
+            logger.info("Adding USD columns")
+            
+            # Get exchange rate
+            exchange_rate = get_usd_exchange_rate()
+            logger.info(f"Using USD exchange rate: {exchange_rate}")
+            
+            # Add USD columns
+            new_columns = []
+            for col in columns:
+                new_columns.append(col)
+                if isinstance(col, dict) and col.get("fieldname") and col.get("fieldname") != "account":
+                    usd_col = col.copy()
+                    usd_col["fieldname"] = f"{col['fieldname']}_usd"
+                    usd_col["label"] = f"{col['label']} (USD)"
+                    usd_col["options"] = "Currency"
+                    usd_col["currency"] = "USD"
+                    new_columns.append(usd_col)
+            
+            columns = new_columns
+            
+            # Add USD values to data
+            for row in data:
+                if isinstance(row, dict):
+                    for col in columns:
+                        if isinstance(col, dict) and col.get("fieldname") and "_usd" in col.get("fieldname"):
+                            original_fieldname = col.get("fieldname").replace("_usd", "")
+                            if row.get(original_fieldname) is not None:
+                                row[col.get("fieldname")] = flt(row.get(original_fieldname)) / exchange_rate
         
         logger.info("Modified balance sheet execution completed")
         return columns, data, message, chart, report_summary
