@@ -15,49 +15,7 @@ filters.push({
 
 // Update the report with our extended filters
 frappe.query_reports["Balance Sheet"] = {
-    "filters": [
-        {
-            "fieldname": "company",
-            "label": __("Company"),
-            "fieldtype": "Link",
-            "options": "Company",
-            "default": frappe.defaults.get_user_default("Company"),
-            "reqd": 1
-        },
-        {
-            "fieldname": "periodicity",
-            "label": __("Periodicity"),
-            "fieldtype": "Select",
-            "options": [
-                { "value": "Monthly", "label": __("Monthly") },
-                { "value": "Quarterly", "label": __("Quarterly") },
-                { "value": "Half-Yearly", "label": __("Half-Yearly") },
-                { "value": "Yearly", "label": __("Yearly") }
-            ],
-            "default": "Yearly",
-            "reqd": 1
-        },
-        {
-            "fieldname": "period_start_date",
-            "label": __("Start Date"),
-            "fieldtype": "Date",
-            "default": frappe.datetime.add_months(frappe.datetime.get_today(), -12),
-            "reqd": 1
-        },
-        {
-            "fieldname": "period_end_date",
-            "label": __("End Date"),
-            "fieldtype": "Date",
-            "default": frappe.datetime.get_today(),
-            "reqd": 1
-        },
-        {
-            "fieldname": "show_usd",
-            "label": __("Show USD Values"),
-            "fieldtype": "Check",
-            "default": 1
-        }
-    ],
+    "filters": filters,
     
     "formatter": function(value, row, column, data, default_formatter) {
         // Use the original formatter if available
