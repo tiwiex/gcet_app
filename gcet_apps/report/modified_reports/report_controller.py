@@ -1,6 +1,7 @@
 import frappe
 from frappe.model.document import Document
 from frappe.core.doctype.report.report import Report
+import json
 
 class CustomReport(Report):
     def get_override_module(self):
@@ -17,3 +18,18 @@ class CustomReport(Report):
             if hasattr(module, 'execute'):
                 return module.execute(filters)
         return super().execute(filters)
+
+    def execute_script_report(self, filters):
+        # Ensure filters is a dictionary
+        if isinstance(filters, str):
+            filters = json.loads(filters)
+            
+        if not filters:
+            filters = {}
+            
+        # Ensure periodicity is set for Balance Sheet report
+        if self.name == "Balance Sheet" and "periodicity" not in filters:
+            filters["periodicity"] = "Yearly"
+            
+        # Call the parent method with the updated filters
+        return super().execute_script_report(filters)

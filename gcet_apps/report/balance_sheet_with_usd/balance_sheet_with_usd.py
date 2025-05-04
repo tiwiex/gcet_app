@@ -10,8 +10,8 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 def execute(filters=None):
-    logger.info("Modified balance sheet execute called")
-    logger.debug(f"Filters: {filters}")
+    logger.info("Balance Sheet with USD execute called")
+    logger.debug(f"Original filters: {filters}")
     
     try:
         # Ensure filters is a dictionary
@@ -25,13 +25,13 @@ def execute(filters=None):
         if "periodicity" not in filters:
             filters["periodicity"] = "Yearly"
             
-        logger.info(f"Using filters: {filters}")
+        logger.info(f"Using filters for original execute: {filters}")
         
         # Get original data
         columns, data, message, chart, report_summary = original_execute(filters)
         logger.info("Original data retrieved")
         
-        # Always add USD columns
+        # Get exchange rate
         exchange_rate = get_usd_exchange_rate()
         logger.info(f"Using USD exchange rate: {exchange_rate}")
         
@@ -58,13 +58,13 @@ def execute(filters=None):
                         if row.get(original_fieldname) is not None:
                             row[col.get("fieldname")] = flt(row.get(original_fieldname)) / exchange_rate
         
-        logger.info("Modified balance sheet execution completed")
+        logger.info("Balance Sheet with USD execution completed")
         return columns, data, message, chart, report_summary
         
     except Exception as e:
-        logger.error(f"Error in balance sheet modification: {str(e)}")
-        frappe.log_error(f"Balance Sheet Error: {str(e)}", "Balance Sheet Report Error")
-        frappe.throw(f"Error in balance sheet modification: {str(e)}")
+        logger.error(f"Error in balance sheet with USD: {str(e)}")
+        frappe.log_error(f"Balance Sheet with USD Error: {str(e)}", "Balance Sheet with USD Report Error")
+        frappe.throw(f"Error in balance sheet with USD: {str(e)}")
 
 def get_usd_exchange_rate():
     # Get the latest exchange rate from Currency Exchange doctype
@@ -82,4 +82,4 @@ def get_usd_exchange_rate():
         frappe.msgprint(_("USD Exchange rate not found. Using 1 as default."))
         return 1.0
         
-    return float(exchange_rate)
+    return float(exchange_rate) 
