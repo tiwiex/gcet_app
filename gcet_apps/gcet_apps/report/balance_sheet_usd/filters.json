@@ -1,0 +1,41 @@
+[
+  {
+    "fieldname": "company",
+    "label": "Company",
+    "fieldtype": "Link",
+    "options": "Company",
+    "reqd": 1
+  },
+  {
+    "fieldname": "usd_exchange_rate",
+    "label": "USD Exchange Rate (₦ → $)",
+    "fieldtype": "Float",
+    "default": 1500.0,
+    "description": "Exchange rate for converting NGN to USD (e.g., 1500 means ₦1500 = $1)"
+  },
+  {
+    "fieldname": "periodicity",
+    "label": "Periodicity",
+    "fieldtype": "Select",
+    "options": [
+      "Monthly",
+      "Quarterly",
+      "Half-Yearly",
+      "Yearly"
+    ],
+    "default": "Yearly",
+    "reqd": 1
+  },
+  {
+    "fieldname": "period_start_date",
+    "label": "Start Date",
+    "fieldtype": "Date",
+    "reqd": 1
+  },
+  {
+    "fieldname": "period_end_date",
+    "label": "End Date",
+    "fieldtype": "Date",
+    "reqd": 1
+  }
+]

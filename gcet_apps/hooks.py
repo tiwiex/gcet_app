@@ -6,18 +6,18 @@ app_email = "tiwiex@yahoo.com"
 app_license = "mit"
 
 # # Report overrides - Fixed format
-override_doctype_class = {
-    "Report": "gcet_apps.report.modified_reports.report_controller.CustomReport"
-}
+#override_doctype_class = {
+#    "Report": "gcet_apps.report.modified_reports.report_controller.CustomReport"
+#}
 
 # Include js files in header of desk.html
-app_include_js = [
-    "/assets/gcet_apps/js/modified_balance_sheet.js"
-]
+#app_include_js = [
+ #   "/assets/gcet_apps/js/modified_balance_sheet.js"
+#]
 
 # Report script paths - this is what connects the report to its JS file
 report_script_paths = {
-    "Balance Sheet": "gcet_apps/public/js/modified_balance_sheet.js"
+    "Balance Sheet USD": "gcet_apps/report/balance_sheet_usd/balance_sheet_usd.js"
 }
 
 # Report configurations
@@ -305,6 +305,7 @@ report_script_paths = {
 # Fixtures
 # --------
 # fixtures = ["Custom Field"]
+fixtures = ["Custom Field", "Property Setter", "Report"]
 
 # Add your custom JavaScript files
 doctype_js = {
@@ -318,5 +319,5 @@ doctype_list_js = {
 
 # Add your modified balance sheet report JavaScript
 report_script_paths = {
-    "Balance Sheet": "gcet_apps/public/js/modified_balance_sheet.js"
+    "Balance Sheet USD": "gcet_apps/report/balance_sheet_usd/balance_sheet_usd.js"
 }
